@@ -1,124 +1,108 @@
 "use client";
 import Link from "next/link";
 import { useState } from "react";
+import { BsSearch, BsCart } from "react-icons/bs";
+import { RiDiscountPercentLine } from "react-icons/ri";
+import { IoHelpBuoyOutline } from "react-icons/io5";
+import { FaRegUser } from "react-icons/fa";
+import { AiOutlineMenu } from "react-icons/ai";
+import { MdOutlineClose } from "react-icons/md";
 
 export default function Navbar() {
   const [open, setOpen] = useState<boolean>(false);
 
+  const cartItems = ["Search", "Offers", "Help"]
+
   return (
     <div>
-      <nav className="bg-white sticky w-full z-20 top-0 start-0 shadow-md">
-        <div className="flex items-center justify-between py-4 md:px-6 px-3">
-          <div className="text-primaryRed font-okra text-2xl font-bold">
-            QuickBite
-          </div>
-          <div>
-            <div className="flex md:hidden space-x-1 md:space-x-0">
-              <Link
-                href={"/cart"}
-                className="inline-flex justify-between gap-1 hover:text-primaryRed font-normal rounded-lg text-lg md:text-xl pl-4 py-2 text-center"
-              >
-                <div>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke-width="1.5"
-                    stroke="currentColor"
-                    className="size-6  "
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z"
-                    />
-                  </svg>
-                </div>
-                <div>Cart</div>
-                <div>(0)</div>
-              </Link>
+      <div className="w-full h-20 top-0 flex justify-between items-center sticky shadow-md bg-white z-[1001]">
+      <div className="container mx-auto max-w-screen-xl flex justify-between p-6">
+        <Link href="/">
+          <div className="text-2xl font-bold text-primaryRed">QuickBite</div>
+        </Link>
 
-              <button
-                onClick={() => setOpen(!open)}
-                type="button"
-                className="items-center p-2 w-10 h-10 justify-center text-sm rounded-lg hover:bg-gray-100 "
-              >
-                <span className="sr-only">Open main menu</span>
-                <svg
-                  className="w-5 h-6"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 17 14"
-                >
-                  <path
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M1 1h15M1 7h15M1 13h15"
-                  />
-                </svg>
-              </button>
-            </div>
-            <div
-              className={`${
-                open ? "inline-flex" : "hidden"
-              } w-full md:flex md:w-auto`}
-            >
-              <ul className="flex flex-col p-4 md:p-0 mt-4 font-medium shadow-md md:shadow-none rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white">
+        <div className="md:hidden flex items-center gap-3">
+          <Link
+            href="/cart"
+            className="flex items-center gap-2 text-lg hover:text-hoverRed"
+            onClick={()=>setOpen(false)}
+          >
+            <BsCart /> Cart {`(${cartItems.length})`}
+          </Link>
+          <button >
+            {open ? (
+              <MdOutlineClose className="text-2xl" />
+            ) : (
+              <AiOutlineMenu className="text-2xl" />
+            )}
+          </button>
+        </div>
+
+        <ul className="hidden md:flex items-center gap-10 lg:gap-15">
+          <Link href="/search">
+            <li className="flex items-center gap-2 text-lg hover:text-hoverRed">
+              <BsSearch /> Search
+            </li>
+          </Link>
+          <Link href="/offers">
+            <li className="flex items-center gap-2 text-lg hover:text-hoverRed">
+              <RiDiscountPercentLine />
+              Offers
+            </li>
+          </Link>
+          <Link href="/help">
+            <li className="flex items-center gap-2 text-lg hover:text-hoverRed">
+              <IoHelpBuoyOutline /> Help
+            </li>
+          </Link>
+          <Link href="/signin">
+            <li className="flex items-center gap-2 text-lg hover:text-hoverRed">
+              <FaRegUser /> Sign In
+            </li>
+          </Link>
+          <Link href="/cart">
+            <li className="flex items-center gap-2 text-lg hover:text-hoverRed">
+              <BsCart /> Cart {`(${cartItems.length})`}
+            </li>
+          </Link>
+        </ul>
+        {open && (
+          <div
+            className={`md:hidden fixed top-[75px] right-0 h-full w-3/4 bg-white shadow-lg overflow-y-auto z-[1000] transform transition-all duration-30000s`}
+          >
+            <ul className="my-6 space-y-4 text-lg">
+              <li className="px-4 py-2 border-b">
                 <Link
-                  href={"/search"}
-                  className="block py-2 px-3 rounded md:p-0 hover:text-primaryRed cursor-pointer"
+                  href="/search"
+                  className="w-auto block"
+                  
                 >
                   Search
                 </Link>
+              </li>
+              <li className="px-4 py-2 border-b">
                 <Link
-                  href={"/offers"}
-                  className="block py-2 px-3 rounded md:p-0 hover:text-primaryRed cursor-pointer"
+                  href="/offers"
+                  className="w-auto block"
+                  
                 >
                   Offers
                 </Link>
+              </li>
+              <li className="px-4 py-2 border-b">
                 <Link
-                  href={"/help"}
-                  className="block py-2 px-3 rounded md:p-0 hover:text-primaryRed cursor-pointer"
+                  href="/help"
+                  className="w-auto block"
+                  
                 >
                   Help
                 </Link>
-                <Link
-                  href={"/signin"}
-                  className="block py-2 px-3 rounded md:p-0 hover:text-primaryRed cursor-pointer"
-                >
-                  Sign In
-                </Link>
-                <Link
-                  href={"/signin"}
-                  className="flex justify-between gap-1 py-2 px-3 rounded md:p-0 hover:text-primaryRed cursor-pointer"
-                >
-                  <div>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke-width="1.5"
-                      stroke="currentColor"
-                      className="size-6"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z"
-                      />
-                    </svg>
-                  </div>
-                  <div>Cart</div>
-                  <div>(0)</div>
-                </Link>
-              </ul>
-            </div>
+              </li>
+            </ul>
           </div>
-        </div>
-      </nav>
+        )}
+      </div>
+    </div>
     </div>
   );
 }

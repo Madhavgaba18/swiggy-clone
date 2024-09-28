@@ -18,6 +18,7 @@ const config: Config = {
     colors:{
       ...colors,
       primaryRed: "#EF4F5F",
+      hoverRed: "#FF7E8B",
     },
     fontFamily:{
       okra: ["Okra", "Helvetica", "sans-serif"]
